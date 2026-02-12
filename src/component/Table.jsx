@@ -1,5 +1,5 @@
 import { DataGrid } from "@mui/x-data-grid";
-import { TextField, Box } from "@mui/material";
+import { TextField } from "@mui/material";
 import { useState } from "react";
 import data from "../Data/source.json";
 import styles from "./Table.module.css";
@@ -7,117 +7,128 @@ import styles from "./Table.module.css";
 const columns = [
   {
     field: "Enrollment_No",
-    headerName: "Enrollment\nNo",
-    width: 100,
+    headerName: "Roll No",
+    width: 120,
     headerAlign: "center",
     align: "center",
+    headerTooltip: "Roll No",
   },
   {
     field: "Name",
     headerName: "Name",
-    flex: 1,
-    minWidth: 120,
+    width: 120,
     editable: false,
     headerAlign: "center",
     align: "center",
+    headerTooltip: "Name",
   },
   {
     field: "Batch",
     headerName: "Batch",
-    width: 100,
+    width: 120,
     editable: false,
     headerAlign: "center",
     align: "center",
+    headerTooltip: "Batch",
   },
   {
     field: "Department",
     headerName: "Department",
-    flex: 1,
-    minWidth: 350,
+    width: 350,
     editable: false,
     headerAlign: "center",
     align: "center",
+    headerTooltip: "Department",
   },
   {
     field: "Sem_1_SGPA",
     headerName: "Sem 1",
     type: "number",
-    width: 80,
+    width: 120,
     editable: false,
     headerAlign: "center",
     align: "center",
+    headerTooltip: "Sem 1",
   },
   {
     field: "Sem_2_SGPA",
     headerName: "Sem 2",
     type: "number",
-    width: 80,
+    width: 120,
     editable: false,
     headerAlign: "center",
     align: "center",
+    headerTooltip: "Sem 2",
   },
   {
     field: "Sem_3_SGPA",
     headerName: "Sem 3",
     type: "number",
-    width: 80,
+    width: 120,
     editable: false,
     headerAlign: "center",
     align: "center",
+    headerTooltip: "Sem 3",
   },
   {
     field: "Sem_4_SGPA",
     headerName: "Sem 4",
     type: "number",
-    width: 80,
+    width: 120,
     editable: false,
     headerAlign: "center",
     align: "center",
+    headerTooltip: "Sem 4",
   },
   {
     field: "Sem_5_SGPA",
     headerName: "Sem 5",
     type: "number",
-    width: 80,
+    width: 120,
     editable: false,
     headerAlign: "center",
     align: "center",
+    headerTooltip: "Sem 5",
   },
   {
     field: "Sem_6_SGPA",
     headerName: "Sem 6",
     type: "number",
-    width: 80,
+    width: 120,
     editable: false,
     headerAlign: "center",
     align: "center",
+    headerTooltip: "Sem 6",
   },
   {
     field: "Sem_7_SGPA",
     headerName: "Sem 7",
     type: "number",
-    width: 80,
+    width: 120,
     editable: false,
     headerAlign: "center",
     align: "center",
+    headerTooltip: "Sem 7",
   },
   {
     field: "Sem_8_SGPA",
     headerName: "Sem 8",
     type: "number",
-    width: 80,
+    width: 120,
     editable: false,
     headerAlign: "center",
     align: "center",
+    headerTooltip: "Sem 8",
   },
   {
     field: "CGPA",
     headerName: "CGPA",
     type: "number",
-    width: 80,
+    width: 120,
     editable: false,
     headerAlign: "center",
     align: "center",
+    headerTooltip: "CGPA",
   },
 ];
 
@@ -154,17 +165,21 @@ export default function Table() {
         <DataGrid
           rows={filteredRows}
           columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 10,
-              },
-            },
-          }}
-          pageSizeOptions={[5, 10, 20, 25, 50]}
+          disablePagination
           checkboxSelection
           disableRowSelectionOnClick
+          filterMode="client"
+          sortingMode="client"
+          disableColumnMenu={false}
+          disableColumnFilter={false}
+          slotProps={{
+            columnMenu: {
+              anchorOrigin: { vertical: 'bottom', horizontal: 'center' },
+              transformOrigin: { vertical: 'top', horizontal: 'center' },
+            },
+          }}
           sx={{
+            height: 600,
             width: "100%",
             "& .MuiDataGrid-root": {
               width: "100%",

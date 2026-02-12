@@ -1,0 +1,4 @@
+Make display the wole header content even if the option is displayed
+make sticky headers
+pop filter near to the field only.
+make it fully responsive

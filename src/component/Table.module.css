@@ -67,20 +67,30 @@
 }
 
 .table {
-    flex: 1;
+    height: 800px;
     overflow: auto;
     background: white;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .table .MuiDataGrid-root {
     min-width: 1400px;
-    flex: 1;
+    height: 100%;
     border-radius: 16px;
     justify-content: flex-start !important;
     margin-left: 0 !important;
     width: 100%;
+}
+
+@media (max-width: 768px) {
+    .table {
+        overflow-x: auto;
+    }
+    .table .MuiDataGrid-root {
+        min-width: 1400px;
+    }
 }
 
 .table .MuiDataGrid-main {
@@ -89,10 +99,20 @@
 }
 
 
+.table .MuiDataGrid-columnHeaders {
+    min-height: 50px !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1 !important;
+    background-color: white !important;
+}
+
 .table .MuiDataGrid-columnHeaderTitle {
     white-space: pre-line !important;
     line-height: 1.2 !important;
     text-align: center !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
 }
 
 .table .MuiDataGrid-cell {
@@ -141,4 +161,8 @@
 
 .table .MuiDataGrid-columnHeader:last-child {
     border-right: none !important;
+}
+
+.table .MuiDataGrid-menu {
+    position: relative !important;
 }
