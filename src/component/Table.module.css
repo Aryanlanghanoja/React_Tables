@@ -1,3 +1,4 @@
+/* Container for the whole page/table */
 .tableContainer {
     height: auto;
     width: 100%;
@@ -10,22 +11,15 @@
     min-height: 100vh;
 }
 
+/* Header section with title and search/filter inputs */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: white;
-    color: white;
     flex-wrap: wrap;
     gap: 16px;
-    position: relative;
     padding-bottom: 30px;
-}
-
-@media (min-width: 768px) {
-    .header {
-        padding-bottom: 30px;
-    }
+    background: white;
 }
 
 .title {
@@ -41,24 +35,19 @@
     }
 }
 
+/* Search bar and dropdown container */
 .searchContainer {
     display: flex;
     align-items: center;
     gap: 16px;
+    /* flex-wrap: wrap; */
 }
 
+/* Search field */
 .searchField {
-    width: 320px;
+    width: 500px;
     background: white;
     border-radius: 12px;
-    transition: box-shadow 0.3s ease;
-}
-
-.dropdown {
-  flex: 1 1 300px; 
-  max-width: 350px;
-  background: white;
-  border-radius: 12px;
 }
 
 .searchField .MuiOutlinedInput-root {
@@ -73,68 +62,68 @@
     border-color: #667eea;
 }
 
+/* Dropdowns */
+.dropdown {
+    flex: 1 1 300px; 
+    max-width: 350px;
+    background: white;
+    border-radius: 12px;
+}
+
+/* Table container */
 .table {
     height: 800px;
     overflow: auto;
     background: white;
+    border-radius: 16px;
     display: flex;
     flex-direction: column;
-    position: relative;
 }
 
+/* DataGrid base */
 .table .MuiDataGrid-root {
     min-width: 1400px;
     height: 100%;
     border-radius: 16px;
-    justify-content: flex-start !important;
-    margin-left: 0 !important;
     width: 100%;
 }
 
-@media (max-width: 768px) {
-    .table {
-        overflow-x: auto;
-    }
-    .table .MuiDataGrid-root {
-        min-width: 1400px;
-    }
-}
-
-.table .MuiDataGrid-main {
-    width: 100% !important;
-    margin-left: 0 !important;
-}
-
-
+/* Column headers (gradient background) */
 .table .MuiDataGrid-columnHeaders {
-    min-height: 50px !important;
     position: sticky !important;
     top: 0 !important;
-    z-index: 1 !important;
-    background-color: white !important;
+    z-index: 10 !important;
+    background: linear-gradient(90deg, #1976d2 0%, #42a5f5 100%) !important;
+    color: white !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    border-bottom: 2px solid #1565c0 !important;
 }
 
-.table .MuiDataGrid-columnHeaderTitle {
-    white-space: pre-line !important;
-    line-height: 1.2 !important;
+/* Individual header cells */
+.table .MuiDataGrid-columnHeader {
+    border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
     text-align: center !important;
-    overflow: visible !important;
-    text-overflow: clip !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.table .MuiDataGrid-cell {
-    border-bottom: 1px solid #f0f0f0 !important;
-    font-size: 0.875rem !important;
-    line-height: 1.4 !important;
-    padding: 8px !important;
-    display: -webkit-box !important;
-    -webkit-box-orient: vertical !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
+.table .MuiDataGrid-columnHeader:last-child {
+    border-right: none !important;
 }
 
-.table .MuiDataGrid-row:hover {
-    background-color: #e3f2fd !important;
+/* Header text */
+.table .MuiDataGrid-columnHeaderTitle {
+    color: white !important;   /* ensures text is visible */
+    opacity: 1 !important;     /* override MUI default opacity */
+    line-height: 1.2 !important;
+    white-space: pre-line !important;
+    text-align: center !important;
+}
+
+/* Rows */
+.table .MuiDataGrid-row {
     transition: background-color 0.2s ease !important;
 }
 
@@ -146,6 +135,22 @@
     background-color: #ffffff !important;
 }
 
+.table .MuiDataGrid-row:hover {
+    background-color: #e3f2fd !important;
+}
+
+/* Cells */
+.table .MuiDataGrid-cell {
+    border-bottom: 1px solid #f0f0f0 !important;
+    font-size: 0.875rem !important;
+    line-height: 1.4 !important;
+    text-align: center !important;
+    padding: 8px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+/* Footer styling */
 .table .MuiDataGrid-footerContainer {
     border-top: 2px solid #e0e0e0 !important;
     background: linear-gradient(135deg, #f5f5f5 0%, #e8eaf6 100%) !important;
@@ -153,23 +158,33 @@
     border-radius: 0 0 16px 16px !important;
 }
 
+/* Checkboxes color */
 .table .MuiCheckbox-root {
     color: #1976d2 !important;
 }
 
+/* Remove focus outline */
 .table .MuiDataGrid-columnHeader:focus,
 .table .MuiDataGrid-cell:focus {
     outline: none !important;
 }
 
-.table .MuiDataGrid-columnHeader {
-    border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
-}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .table {
+        overflow-x: auto;
+    }
 
-.table .MuiDataGrid-columnHeader:last-child {
-    border-right: none !important;
-}
+    .table .MuiDataGrid-root {
+        min-width: 1400px;
+    }
 
-.table .MuiDataGrid-menu {
-    position: relative !important;
+    .searchField {
+        width: 100%;
+    }
+
+    .dropdown {
+        max-width: 100%;
+        flex: 1 1 100%;
+    }
 }

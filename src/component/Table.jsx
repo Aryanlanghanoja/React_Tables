@@ -98,8 +98,33 @@ export default function Table() {
           disableRowSelectionOnClick
           filterMode="client"
           sortingMode="client"
-          sx={{ height: 600, width: "100%" }}
+          sx={{
+            height: 600,
+            width: '100%',
+            '& .MuiDataGrid-columnHeaders': {
+              background: 'linear-gradient(90deg, #1976d2 0%, #42a5f5 100%)',
+              color: '#000000',
+              fontWeight: '600',
+              fontSize: '16px',
+            },
+            '& .MuiDataGrid-columnHeader': {
+              borderRight: '1px solid rgba(255, 255, 255, 0.2)',
+            },
+            '& .MuiDataGrid-columnHeader:last-child': {
+              borderRight: 'none',
+            },
+            '& .MuiDataGrid-row:nth-of-type(even)': {
+              backgroundColor: '#f8f9fa',
+            },
+            '& .MuiDataGrid-row:nth-of-type(odd)': {
+              backgroundColor: '#ffffff',
+            },
+            '& .MuiDataGrid-row:hover': {
+              backgroundColor: '#e3f2fd',
+            },
+          }}
         />
+
       </div>
     </>
   );
