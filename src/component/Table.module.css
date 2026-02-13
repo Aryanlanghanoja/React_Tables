@@ -54,6 +54,13 @@
     transition: box-shadow 0.3s ease;
 }
 
+.dropdown {
+  flex: 1 1 300px; 
+  max-width: 350px;
+  background: white;
+  border-radius: 12px;
+}
+
 .searchField .MuiOutlinedInput-root {
     border-radius: 12px;
 }

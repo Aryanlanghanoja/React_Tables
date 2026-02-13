@@ -1,150 +1,45 @@
 import { DataGrid } from "@mui/x-data-grid";
-import { TextField } from "@mui/material";
-import { useState } from "react";
+import { TextField, InputLabel, MenuItem, FormControl, Select } from "@mui/material";
+import { useState, useMemo } from "react";
 import data from "../Data/source.json";
 import styles from "./Table.module.css";
 
 const columns = [
-  {
-    field: "Enrollment_No",
-    headerName: "Roll No",
-    width: 120,
-    headerAlign: "center",
-    align: "center",
-    headerTooltip: "Roll No",
-  },
-  {
-    field: "Name",
-    headerName: "Name",
-    width: 120,
-    editable: false,
-    headerAlign: "center",
-    align: "center",
-    headerTooltip: "Name",
-  },
-  {
-    field: "Batch",
-    headerName: "Batch",
-    width: 120,
-    editable: false,
-    headerAlign: "center",
-    align: "center",
-    headerTooltip: "Batch",
-  },
-  {
-    field: "Department",
-    headerName: "Department",
-    width: 350,
-    editable: false,
-    headerAlign: "center",
-    align: "center",
-    headerTooltip: "Department",
-  },
-  {
-    field: "Sem_1_SGPA",
-    headerName: "Sem 1",
-    type: "number",
-    width: 120,
-    editable: false,
-    headerAlign: "center",
-    align: "center",
-    headerTooltip: "Sem 1",
-  },
-  {
-    field: "Sem_2_SGPA",
-    headerName: "Sem 2",
-    type: "number",
-    width: 120,
-    editable: false,
-    headerAlign: "center",
-    align: "center",
-    headerTooltip: "Sem 2",
-  },
-  {
-    field: "Sem_3_SGPA",
-    headerName: "Sem 3",
-    type: "number",
-    width: 120,
-    editable: false,
-    headerAlign: "center",
-    align: "center",
-    headerTooltip: "Sem 3",
-  },
-  {
-    field: "Sem_4_SGPA",
-    headerName: "Sem 4",
-    type: "number",
-    width: 120,
-    editable: false,
-    headerAlign: "center",
-    align: "center",
-    headerTooltip: "Sem 4",
-  },
-  {
-    field: "Sem_5_SGPA",
-    headerName: "Sem 5",
-    type: "number",
-    width: 120,
-    editable: false,
-    headerAlign: "center",
-    align: "center",
-    headerTooltip: "Sem 5",
-  },
-  {
-    field: "Sem_6_SGPA",
-    headerName: "Sem 6",
-    type: "number",
-    width: 120,
-    editable: false,
-    headerAlign: "center",
-    align: "center",
-    headerTooltip: "Sem 6",
-  },
-  {
-    field: "Sem_7_SGPA",
-    headerName: "Sem 7",
-    type: "number",
-    width: 120,
-    editable: false,
-    headerAlign: "center",
-    align: "center",
-    headerTooltip: "Sem 7",
-  },
-  {
-    field: "Sem_8_SGPA",
-    headerName: "Sem 8",
-    type: "number",
-    width: 120,
-    editable: false,
-    headerAlign: "center",
-    align: "center",
-    headerTooltip: "Sem 8",
-  },
-  {
-    field: "CGPA",
-    headerName: "CGPA",
-    type: "number",
-    width: 120,
-    editable: false,
-    headerAlign: "center",
-    align: "center",
-    headerTooltip: "CGPA",
-  },
+  { field: "Enrollment_No", headerName: "Roll No", width: 120, headerAlign: "center", align: "center" },
+  { field: "Name", headerName: "Name", width: 150, headerAlign: "center", align: "center" },
+  { field: "Batch", headerName: "Batch", width: 120, headerAlign: "center", align: "center" },
+  { field: "Department", headerName: "Department", width: 300, headerAlign: "center", align: "center" },
+  { field: "Sem_1_SGPA", headerName: "Sem 1", type: "number", width: 120, headerAlign: "center", align: "center" },
+  { field: "Sem_2_SGPA", headerName: "Sem 2", type: "number", width: 120, headerAlign: "center", align: "center" },
+  { field: "Sem_3_SGPA", headerName: "Sem 3", type: "number", width: 120, headerAlign: "center", align: "center" },
+  { field: "Sem_4_SGPA", headerName: "Sem 4", type: "number", width: 120, headerAlign: "center", align: "center" },
+  { field: "Sem_5_SGPA", headerName: "Sem 5", type: "number", width: 120, headerAlign: "center", align: "center" },
+  { field: "Sem_6_SGPA", headerName: "Sem 6", type: "number", width: 120, headerAlign: "center", align: "center" },
+  { field: "Sem_7_SGPA", headerName: "Sem 7", type: "number", width: 120, headerAlign: "center", align: "center" },
+  { field: "Sem_8_SGPA", headerName: "Sem 8", type: "number", width: 120, headerAlign: "center", align: "center" },
+  { field: "CGPA", headerName: "CGPA", type: "number", width: 120, headerAlign: "center", align: "center" },
 ];
 
-const rows = data.map((item) => ({
-  id: item.Enrollment_No,
-  ...item,
-}));
+const rows = data.map((item) => ({ id: item.Enrollment_No, ...item }));
 
 export default function Table() {
   const [searchText, setSearchText] = useState("");
+  const [selectedBatch, setSelectedBatch] = useState("");
+  const [selectedDept, setSelectedDept] = useState("");
 
-  const filteredRows = rows.filter((row) =>
-    Object.values(row).some((value) =>
-      String(value).toLowerCase().includes(searchText.toLowerCase()),
-    ),
-  );
+  const batches = useMemo(() => [...new Set(data.map((item) => item.Batch))], []);
+  const departments = useMemo(() => [...new Set(data.map((item) => item.Department))], []);
+
+  const filteredRows = useMemo(() => {
+    return rows.filter((row) => {
+      const matchesSearch = Object.values(row).some((value) =>
+        String(value).toLowerCase().includes(searchText.toLowerCase())
+      );
+      const matchesBatch = selectedBatch ? row.Batch === selectedBatch : true;
+      const matchesDept = selectedDept ? row.Department === selectedDept : true;
+      return matchesSearch && matchesBatch && matchesDept;
+    });
+  }, [searchText, selectedBatch, selectedDept]);
 
   return (
     <>
@@ -159,8 +54,41 @@ export default function Table() {
             onChange={(e) => setSearchText(e.target.value)}
             placeholder="Search by name, enrollment, department..."
           />
+
+          <FormControl className={styles.dropdown}>
+            <InputLabel>Batch</InputLabel>
+            <Select
+              value={selectedBatch}
+              onChange={(e) => setSelectedBatch(e.target.value)}
+              label="Batch"
+            >
+              <MenuItem value="">All</MenuItem>
+              {batches.map((batch) => (
+                <MenuItem key={batch} value={batch}>
+                  {batch}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <FormControl className={styles.dropdown}>
+            <InputLabel>Department</InputLabel>
+            <Select
+              value={selectedDept}
+              onChange={(e) => setSelectedDept(e.target.value)}
+              label="Department"
+            >
+              <MenuItem value="">All</MenuItem>
+              {departments.map((dept) => (
+                <MenuItem key={dept} value={dept}>
+                  {dept}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </div>
       </div>
+
       <div className={styles.table}>
         <DataGrid
           rows={filteredRows}
@@ -170,21 +98,7 @@ export default function Table() {
           disableRowSelectionOnClick
           filterMode="client"
           sortingMode="client"
-          disableColumnMenu={false}
-          disableColumnFilter={false}
-          slotProps={{
-            columnMenu: {
-              anchorOrigin: { vertical: 'bottom', horizontal: 'center' },
-              transformOrigin: { vertical: 'top', horizontal: 'center' },
-            },
-          }}
-          sx={{
-            height: 600,
-            width: "100%",
-            "& .MuiDataGrid-root": {
-              width: "100%",
-            },
-          }}
+          sx={{ height: 600, width: "100%" }}
         />
       </div>
     </>
